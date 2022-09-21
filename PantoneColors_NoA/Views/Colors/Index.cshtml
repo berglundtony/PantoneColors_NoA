@@ -1,1 +1,23 @@
-﻿using PantoneColors.NoA
+﻿@model PantoneColors
+  
+        @foreach (var i in  Model.Colors)
+        {
+             <ul class=" mb-6" id="horizontal-list">
+                <li>
+                        @i.name
+                </li>
+                <li>
+                        @i.pantone_value
+                </li>
+                 <li>
+                        @i.color
+                </li>
+                 <li>
+                        @i.year
+                </li>
+                      <li>
+                        @i.group
+                </li>
+            </ul>
+        }
+    

@@ -11,7 +11,7 @@ namespace PantoneColors_NoA.Controllers
     {
         //static readonly JsonSerializer _serializer = new JsonSerializer();
         static readonly HttpClient _client = new HttpClient();
-       
+
         public async Task<IActionResult> Index()
         {
             List<Root>? colors = new List<Root>();
@@ -19,11 +19,14 @@ namespace PantoneColors_NoA.Controllers
             var model = new PantoneColors();
 
             result = await GetColorPerPage(2, result);
-            if(result != null)
+
+            if (result != null)
             {
                 for (int i = 1; i <= result.total_pages; i++)
                 {
-                    colors.Add(result = await GetColors(2, i, result));  
+                    Root? root = await GetColors(2, i, result) ?? null;
+                    if (root != null)
+                        colors.Add(item: result = root);
                 }
             }
             else { return NotFound(); }
@@ -31,7 +34,13 @@ namespace PantoneColors_NoA.Controllers
 
             foreach (var color in colors)
             {
-                model.Colors.Add(new PantoneColor { id = color.data.First().id, name = result.data.First().name, color = color.data.First().color, pantone_value = color.data.First().pantone_value, year = color.data.First().year });
+                foreach (var col in color.data)
+                {
+                    string group = Groups(col.pantone_value);
+                    //if(group == "Group1") { }
+                    model.Colors.Add(new PantoneColor { id = col.id, name = col.name, color = col.color, pantone_value = col.pantone_value, year = col.year, group = group});
+                }
+
             }
 
             return View(model);
@@ -47,14 +56,14 @@ namespace PantoneColors_NoA.Controllers
 
 
         private static async Task<Root?> GetColors(int perpage, int page, Root? result)
-        {  
+        {
             string apiUrl = $"https://reqres.in/api/example?per_page={perpage}&page={page}";
             result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
 
             return await Task.FromResult(result);
 
         }
-        private static async Task<Root?>  GetAPIDataColorResult(Root? result, string apiUrl)
+        private static async Task<Root?> GetAPIDataColorResult(Root? result, string apiUrl)
         {
 
             using (var httpClient = new HttpClient())
@@ -77,5 +86,26 @@ namespace PantoneColors_NoA.Controllers
             }
             return result;
         }
+
+        private string Groups(string pantone_value)
+        {
+            pantone_value = pantone_value.Substring(0, 2);
+            int.TryParse(pantone_value, out int num);
+
+            if (num % 3 == 0)
+            {
+                return "Group 1";
+            }
+            else if (num % 2 == 0)
+            {
+                return "Group 2";
+            }
+            else
+            {
+                return "Group 3";
+            }
+
+        }
     }
 }
+
