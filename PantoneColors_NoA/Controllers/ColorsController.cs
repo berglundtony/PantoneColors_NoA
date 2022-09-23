@@ -16,14 +16,13 @@ namespace PantoneColors_NoA.Controllers
         {
             List<Root>? colors = new List<Root>();
             Root? result = new();
-            Root? result_totalpages = new();
             var model = new PantoneColors();
 
-            result = await ColorMethods.GetColorPerPage(2, result);
+            result = await ColorMethods.GetTotalPages(2, result);
 
             if(result != null)
             {
-                for (int p = 1; p <= result.total; p++)
+                for (int p = 1; p <= result.total_pages; p++)
                 {
                     if (colors != null)
                     {

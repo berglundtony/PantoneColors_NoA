@@ -57,10 +57,18 @@ namespace PantoneColors_NoA.Functions
         }
 
 
-        internal static async Task<Root?> GetColorPerPage(int perpage, Root? result)
+        internal static async Task<Root?> GetTotalPages(int perpage, Root? result)
         {
-            string apiUrl = $"https://reqres.in/api/example?per_page={perpage}";
-            result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
+            try
+            {
+                string apiUrl = $"https://reqres.in/api/example?per_page={perpage}";
+                result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+           
             return await Task.FromResult(result).ConfigureAwait(false);
 
         }
@@ -68,8 +76,16 @@ namespace PantoneColors_NoA.Functions
 
         internal static async Task<Root?> GetColors(int perpage, int page, Root? result)
         {
-            string apiUrl = $"https://reqres.in/api/example?per_page={perpage}&page={page}";
-            result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
+            try
+            {
+                string apiUrl = $"https://reqres.in/api/example?per_page={perpage}&page={page}";
+                result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
+            }
+            catch
+            {
+                return null;
+            }
+      
 
             return await Task.FromResult(result);
 
