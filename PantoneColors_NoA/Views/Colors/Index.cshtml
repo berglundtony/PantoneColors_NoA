@@ -1,23 +1,80 @@
 ﻿@model PantoneColors
-  
-        @foreach (var i in  Model.Colors)
-        {
-             <ul class=" mb-6" id="horizontal-list">
-                <li>
-                        @i.name
-                </li>
-                <li>
-                        @i.pantone_value
-                </li>
-                 <li>
-                        @i.color
-                </li>
-                 <li>
-                        @i.year
-                </li>
-                      <li>
-                        @i.group
-                </li>
-            </ul>
-        }
-    
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h4 class="display-8">Group 1</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Group1.FirstOrDefault().name ):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group1.FirstOrDefault().pantone_value):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group1.FirstOrDefault().color):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group2.FirstOrDefault().year):</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var i in Model.Group1)
+                    {
+                        <tr>
+                            <td>@i.name</td>
+                            <td>@i.pantone_value</td>
+                            <td>@i.color</td>
+                            <td>@i.year</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h4 class="display-8">Group 2</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Group2.FirstOrDefault().name):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group2.FirstOrDefault().pantone_value):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group2.FirstOrDefault().color):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group2.FirstOrDefault().year):</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var i in Model.Group2)
+                    {
+                        <tr>
+                            <td>@i.name</td>
+                            <td>@i.pantone_value</td>
+                            <td>@i.color</td>
+                            <td>@i.year</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h4 class="display-8">Group 3</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Group3.FirstOrDefault().name):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group3.FirstOrDefault().pantone_value):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group3.FirstOrDefault().color):</th>
+                        <th>@Html.DisplayNameFor(m => m.Group2.FirstOrDefault().year):</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var i in Model.Group3)
+                    {
+                        <tr>
+                            <td>@i.name</td>
+                            <td>@i.pantone_value</td>
+                            <td>@i.color</td>
+                            <td>@i.year</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

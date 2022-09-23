@@ -18,21 +18,6 @@
         public List<ColorModel> data { get; set; }
         public Support support { get; set; }
 
-        public Root(int page, int per_page, int total, int total_pages, List<ColorModel> data, Support support)
-        {
-            this.page = page;
-            this.per_page = per_page;
-            this.total = total;
-            this.total_pages = total_pages;
-            this.data = data;
-            this.support = support;
-        }
-
-        public Root()
-        {
-
-        }
-
     }
 
     public class Support
