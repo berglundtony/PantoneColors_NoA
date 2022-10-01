@@ -57,23 +57,6 @@ namespace PantoneColors_NoA.Functions
         }
 
 
-        internal static async Task<Root?> GetTotalPages(int perpage, Root? result)
-        {
-            try
-            {
-                string apiUrl = $"https://reqres.in/api/example?per_page={perpage}";
-                result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-           
-            return await Task.FromResult(result).ConfigureAwait(false);
-
-        }
-
-
         internal static async Task<Root?> GetColors(int perpage, int page, Root? result)
         {
             try
@@ -81,13 +64,13 @@ namespace PantoneColors_NoA.Functions
                 string apiUrl = $"https://reqres.in/api/example?per_page={perpage}&page={page}";
                 result = await GetAPIDataColorResult(result, apiUrl).ConfigureAwait(false);
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }
       
 
-            return await Task.FromResult(result);
+            return await Task.FromResult(result).ConfigureAwait(false);
 
         }
         internal static async Task<Root?> GetAPIDataColorResult(Root? result, string apiUrl)
@@ -99,10 +82,10 @@ namespace PantoneColors_NoA.Functions
                 using (var reader = new StreamReader(stream))
                 using (var json = new JsonTextReader(reader))
                 {
-                    HttpResponseMessage response = _client.GetAsync(apiUrl).Result;
+                    HttpResponseMessage response = await _client.GetAsync(apiUrl);
                     if (response.IsSuccessStatusCode)
                     {
-                        result = JsonConvert.DeserializeObject<Root?>(response.Content.ReadAsStringAsync().Result);
+                        result =  JsonConvert.DeserializeObject<Root?>(await response.Content.ReadAsStringAsync());
                     }
                     else
                     {

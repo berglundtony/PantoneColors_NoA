@@ -10,15 +10,13 @@ namespace PantoneColors_NoA.Controllers
 {
     public class ColorsController : Controller
     {
-        static readonly HttpClient _client = new HttpClient();
-
         public async Task<IActionResult> Index()
         {
             List<Root>? colors = new List<Root>();
             Root? result = new();
             var model = new PantoneColors();
 
-            result = await ColorMethods.GetTotalPages(2, result);
+            result = await ColorMethods.GetColors(2,1,result);
 
             if(result != null)
             {
